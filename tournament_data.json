@@ -1,0 +1,166 @@
+{
+    "events": [
+        {
+            "id": 1,
+            "name": "Event 1 - Sprint",
+            "type": "Individual"
+        },
+        {
+            "id": 2,
+            "name": "Event 2 - Relay",
+            "type": "Team"
+        },
+        {
+            "id": 3,
+            "name": "Event 3 - Long Jump",
+            "type": "Individual"
+        },
+        {
+            "id": 4,
+            "name": "Event 4 - Tug of War",
+            "type": "Team"
+        },
+        {
+            "id": 5,
+            "name": "Event 5 - Obstacle Run",
+            "type": "Individual"
+        }
+    ],
+    "participants": [
+        {
+            "name": "Job",
+            "type": "Individual",
+            "team": null,
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        },
+        {
+            "name": "Jay",
+            "type": "Individual",
+            "team": null,
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        },
+        {
+            "name": "Caleb",
+            "type": "Individual",
+            "team": null,
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        },
+        {
+            "name": "Nate",
+            "type": "Individual",
+            "team": null,
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        },
+        {
+            "name": "Bill",
+            "type": "Team",
+            "team": "A",
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        },
+        {
+            "name": "Amos",
+            "type": "Team",
+            "team": "A",
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        },
+        {
+            "name": "Eric",
+            "type": "Team",
+            "team": "A",
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        },
+        {
+            "name": "Rob",
+            "type": "Team",
+            "team": "A",
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        },
+        {
+            "name": "Rich",
+            "type": "Team",
+            "team": "A",
+            "scores": [
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "total": 0,
+            "rank": 1,
+            "single_event": false
+        }
+    ]
+}
