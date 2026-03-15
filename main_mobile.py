@@ -110,6 +110,7 @@ def main(page: ft.Page):
         )
 
         tabs = ft.Tabs(
+            length=2,
             selected_index=0,
             animation_duration=300,
             expand=1,
