@@ -93,7 +93,11 @@ def main(page: ft.Page):
                 ft.ElevatedButton("Login", on_click=handle_login, bgcolor=PRIMARY_COLOR, color=ft.Colors.WHITE),
             ],
         )
-        page.open(dialog)
+        if not hasattr(page, "overlay"):
+            page.overlay = []
+        page.overlay.append(dialog)
+        dialog.open = True
+        page.update()
 
     def show_admin_view():
         page.clean()
@@ -108,13 +112,7 @@ def main(page: ft.Page):
         tabs = ft.Tabs(
             selected_index=0,
             animation_duration=300,
-            # In Flet 1.0, 'tabs' property still exists but 'controls' is the init arg for some variants. 
-            # Actually, per the error, 'tabs' is unexpected in __init__. We'll use adding them via property or controls.
             expand=1,
-            controls=[
-                ft.Tab(label="Participants", icon=ft.Icons.PERSON),
-                ft.Tab(label="Events", icon=ft.Icons.EVENT),
-            ],
             content=ft.TabBarView(
                 controls=[
                     get_participant_manager(),
@@ -122,6 +120,10 @@ def main(page: ft.Page):
                 ]
             )
         )
+        tabs.tabs = [
+            ft.Tab(label="Participants", icon=ft.Icons.PERSON),
+            ft.Tab(label="Events", icon=ft.Icons.EVENT),
+        ]
         
         page.add(tabs)
         page.update()
@@ -193,7 +195,11 @@ def main(page: ft.Page):
                 show_admin_view()
 
             add_dialog = ft.AlertDialog(title=ft.Text("Add Event"), content=ft.Column([name_in, type_in], tight=True), actions=[ft.TextButton("Save", on_click=save_ev)])
-            page.open(add_dialog)
+            if not hasattr(page, "overlay"):
+                page.overlay = []
+            page.overlay.append(add_dialog)
+            add_dialog.open = True
+            page.update()
 
         def delete_ev(e_id):
             # Same logic as Desktop for index removal
@@ -280,7 +286,11 @@ def main(page: ft.Page):
             show_admin_view()
         
         edit_dialog = ft.AlertDialog(title=ft.Text("Edit"), content=name_in, actions=[ft.TextButton("Update", on_click=save_edit)])
-        page.open(edit_dialog)
+        if not hasattr(page, "overlay"):
+            page.overlay = []
+        page.overlay.append(edit_dialog)
+        edit_dialog.open = True
+        page.update()
 
     # Initial View
     show_public_view()
