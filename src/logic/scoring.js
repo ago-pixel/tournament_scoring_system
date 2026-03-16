@@ -1,4 +1,5 @@
-const POINTS_SCHEME = { 1: 10, 2: 7, 3: 5, 4: 3, 5: 1 };
+const POINTS_SCHEME = { 1: 10, 2: 8, 3: 6, 4: 4, 5: 2 };
+const PARTICIPATION_POINTS = 1;
 
 /**
  * Calculates points and rankings based on the same rules as the Python version.
@@ -38,18 +39,12 @@ export function calculateRankings(participants, events) {
         const N = eventEntries.length;
 
         // Calculate points based on position (P)
-        // Formula: Score = 100 * (N - P) / (N - 1)
+        // Scheme: 1:10, 2:8, 3:6, 4:4, 5:2, >5:1
         eventEntries.forEach((entry) => {
             const P = entry.position;
-            let points = 0;
-            if (N > 1) {
-                points = Math.round(100 * (N - P) / (N - 1));
-            } else {
-                points = 100; // Only one participant
-            }
+            const points = POINTS_SCHEME[P] || PARTICIPATION_POINTS;
             
-            // Ensure points are within 0-100 range
-            updatedParticipants[entry.index][`_event_points_${eventIdx}`] = Math.max(0, Math.min(100, points));
+            updatedParticipants[entry.index][`_event_points_${eventIdx}`] = points;
         });
     }
 
