@@ -3,6 +3,7 @@ import { useTournament } from '../../context/TournamentContext';
 
 const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
     const { participants, events, recordScore } = useTournament();
+    const [selectedEventIdx, setSelectedEventIdx] = useState(0);
     const [localScores, setLocalScores] = useState({});
 
     // Initialize local scores when event changes or participants update
