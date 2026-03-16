@@ -53,6 +53,18 @@ export const TournamentProvider = ({ children }) => {
 
     const addParticipant = (participant) => {
         setData(prev => {
+            const teamCount = prev.participants.filter(p => p.type === 'Team').length;
+            const individualCount = prev.participants.filter(p => p.type === 'Individual').length;
+
+            if (participant.type === 'Team' && teamCount >= 5) {
+                alert("Maximum of 5 teams allowed.");
+                return prev;
+            }
+            if (participant.type === 'Individual' && individualCount >= 20) {
+                alert("Maximum of 20 individual participants allowed.");
+                return prev;
+            }
+
             const newParticipants = [...prev.participants, participant];
             return { ...prev, participants: calculateRankings(newParticipants, prev.events) };
         });
@@ -61,6 +73,22 @@ export const TournamentProvider = ({ children }) => {
     const updateParticipant = (index, updatedParticipant) => {
         setData(prev => {
             const newParticipants = [...prev.participants];
+            
+            // If changing type, check limits
+            if (newParticipants[index].type !== updatedParticipant.type) {
+                const teamCount = prev.participants.filter(p => p.type === 'Team').length;
+                const individualCount = prev.participants.filter(p => p.type === 'Individual').length;
+
+                if (updatedParticipant.type === 'Team' && teamCount >= 5) {
+                    alert("Maximum of 5 teams allowed.");
+                    return prev;
+                }
+                if (updatedParticipant.type === 'Individual' && individualCount >= 20) {
+                    alert("Maximum of 20 individual participants allowed.");
+                    return prev;
+                }
+            }
+
             newParticipants[index] = updatedParticipant;
             return { ...prev, participants: calculateRankings(newParticipants, prev.events) };
         });
@@ -75,6 +103,10 @@ export const TournamentProvider = ({ children }) => {
 
     const addEvent = (event) => {
         setData(prev => {
+            if (prev.events.length >= 5) {
+                alert("Only 5 events allowed.");
+                return prev;
+            }
             const newEvents = [...prev.events, event];
             return { ...prev, events: newEvents };
         });
@@ -95,6 +127,9 @@ export const TournamentProvider = ({ children }) => {
     };
 
     const recordScore = (participantIndex, eventIdx, score) => {
+        // Validation: Position must be at least 1
+        if (score !== null && score < 1) return;
+
         setData(prev => {
             const newParticipants = [...prev.participants];
             if (!newParticipants[participantIndex].scores) {

@@ -6,6 +6,8 @@ import ParticipantManager from './components/Admin/ParticipantManager';
 import EventManager from './components/Admin/EventManager';
 import ScoreRecorder from './components/Admin/ScoreRecorder';
 
+import logo from './assets/logo.png';
+
 const AppContent = () => {
     const { isAdmin, logout } = useTournament();
     const [view, setView] = useState('leaderboard'); // leaderboard, login, manage_participants, manage_events, record_scores
@@ -36,20 +38,10 @@ const AppContent = () => {
                 borderBottom: '1px solid var(--glass-border)'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                    <div style={{ 
-                        width: '45px', 
-                        height: '45px', 
-                        background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
-                        borderRadius: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '1.5rem',
-                        fontWeight: 700
-                    }}>T</div>
+                    <img src={logo} alt="College Logo" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
                     <div>
-                        <h1 style={{ fontSize: '1.4rem' }}>Tournament Scoring</h1>
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Cambridge Academy System</p>
+                        <h1 style={{ fontSize: '1.4rem' }}>College Tournament Scoring</h1>
+                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Professional Tournament Management</p>
                     </div>
                 </div>
 
@@ -79,7 +71,7 @@ const AppContent = () => {
             </main>
 
             <footer style={{ marginTop: '5rem', paddingBottom: '2rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                &copy; {new Date().getFullYear()} Cambridge Academy • Advanced Tournament Scoring System
+                &copy; {new Date().getFullYear()} A.G. Osuri • College Tournament Scoring System
             </footer>
         </div>
     );

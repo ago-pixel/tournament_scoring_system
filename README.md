@@ -1,16 +1,64 @@
-# React + Vite
+# College Tournament Scoring System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, professional web-based tournament scoring and management system designed for colleges and educational institutions.
 
-Currently, two official plugins are available:
+## Live Access
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The system is hosted and accessible online at:
+**[https://ago-pixel.github.io/tournament_scoring_system/](https://ago-pixel.github.io/tournament_scoring_system/)**
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Real-time Leaderboard**: Automatically calculated rankings with tie-handling logic.
+- **Position-Based Proportional Scoring**: Intelligent scoring system that awards points (0-100) based on participant positions.
+- **Participation Limits**:
+  - Maximum 5 Teams
+  - Maximum 20 Individual Participants
+  - Strictly 5 Events
+- **Responsive Design**: Premium Glassmorphism UI that works on desktop and mobile.
+- **Local Persistence**: Data is saved automatically to your browser's local storage.
+- **Admin Dashboard**: Secure management of events, participants, and score recording.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React, Vite, JavaScript
+- **Styling**: Vanilla CSS with modern Glassmorphism aesthetics
+- **Deployment**: GitHub Pages with Automated GitHub Actions
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm (v9 or higher)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ago-pixel/tournament_scoring_system.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd tournament_scoring_system
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Usage
+
+1. Open the application in your browser.
+2. Access the **Admin Access** panel (Password: `admin123`).
+3. Configure your 5 events.
+4. Add your teams and individual participants.
+5. Record positions for each event to see the leaderboard update in real-time.
+
+## License
+
+Copyright © 2026 A.G. Osuri • College Tournament Scoring System

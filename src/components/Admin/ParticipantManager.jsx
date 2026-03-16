@@ -8,8 +8,15 @@ const ParticipantManager = ({ onBack }) => {
     const [team, setTeam] = useState('');
     const [editingIndex, setEditingIndex] = useState(null);
 
+    const teamCount = participants.filter(p => p.type === 'Team').length;
+    const individualCount = participants.filter(p => p.type === 'Individual').length;
+    const isTeamLimitReached = type === 'Team' && teamCount >= 5 && editingIndex === null;
+    const isIndivLimitReached = type === 'Individual' && individualCount >= 20 && editingIndex === null;
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (isTeamLimitReached || isIndivLimitReached) return;
+
         const participant = { name, type, team: type === 'Team' ? team : null, scores: editingIndex !== null ? participants[editingIndex].scores : [] };
         
         if (editingIndex !== null) {
@@ -71,7 +78,23 @@ const ParticipantManager = ({ onBack }) => {
                                 <input value={team} onChange={(e) => setTeam(e.target.value)} required placeholder="e.g. A, B, Dragons" />
                             </div>
                         )}
-                        <button type="submit" className="btn btn-primary" style={{ marginTop: '1rem', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                            <span>Teams: {teamCount}/5</span>
+                            <span>Individuals: {individualCount}/20</span>
+                        </div>
+                        
+                        {(isTeamLimitReached || isIndivLimitReached) && (
+                            <p style={{ color: '#ef4444', fontSize: '0.85rem', textAlign: 'center' }}>
+                                Limit reached for {type}s.
+                            </p>
+                        )}
+
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary" 
+                            style={{ marginTop: '0.5rem', justifyContent: 'center' }}
+                            disabled={isTeamLimitReached || isIndivLimitReached}
+                        >
                             {editingIndex !== null ? 'Update' : 'Add'} Participant
                         </button>
                         {editingIndex !== null && (

@@ -6,8 +6,15 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
     const [selectedEventIdx, setSelectedEventIdx] = useState(0);
 
     const handleScoreChange = (participantIdx, score) => {
-        const numericScore = score === '' ? null : parseInt(score, 10);
-        recordScore(participantIdx, selectedEventIdx, numericScore);
+        if (score === '') {
+            recordScore(participantIdx, selectedEventIdx, null);
+            return;
+        }
+        
+        const numericScore = parseInt(score, 10);
+        if (!isNaN(numericScore) && numericScore >= 1) { // Position must be at least 1
+            recordScore(participantIdx, selectedEventIdx, numericScore);
+        }
     };
 
     const currentEvent = events[selectedEventIdx];
@@ -24,7 +31,7 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
 
             <div className="glass-card" style={{ padding: '2rem' }}>
                 <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <h3 style={{ whiteSpace: 'nowrap' }}>Record Scores for:</h3>
+                    <h3 style={{ whiteSpace: 'nowrap' }}>Record Positions for:</h3>
                     <select 
                         value={selectedEventIdx} 
                         onChange={(e) => setSelectedEventIdx(parseInt(e.target.value))}
@@ -53,7 +60,7 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
                                 <tr style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--glass-border)' }}>
                                     <th style={{ padding: '1rem' }}>PARTICIPANT</th>
                                     <th style={{ padding: '1rem' }}>TYPE</th>
-                                    <th style={{ padding: '1rem', width: '150px' }}>RAW SCORE</th>
+                                    <th style={{ padding: '1rem', width: '150px' }}>POSITION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,7 +85,8 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
                                                     type="number" 
                                                     value={scoreValue} 
                                                     onChange={(e) => handleScoreChange(i, e.target.value)}
-                                                    placeholder="Score"
+                                                    placeholder="Pos"
+                                                    min="1"
                                                     style={{ padding: '8px', fontSize: '0.9rem' }}
                                                 />
                                             </td>

@@ -23,29 +23,33 @@ export function calculateRankings(participants, events) {
         }
     });
 
-    // Calculate per-event points using raw scores
+    // Calculate per-event points using positions
     for (let eventIdx = 0; eventIdx < numEvents; eventIdx++) {
         const eventEntries = [];
         updatedParticipants.forEach((p, i) => {
-            const score = p.scores[eventIdx];
-            if (typeof score === 'number' && score > 0) {
-                eventEntries.push({ index: i, score: score });
+            const position = p.scores[eventIdx];
+            if (typeof position === 'number' && position > 0) {
+                eventEntries.push({ index: i, position: position });
             }
         });
 
         if (eventEntries.length === 0) continue;
 
-        // Sort by raw score descending
-        eventEntries.sort((a, b) => b.score - a.score);
+        const N = eventEntries.length;
 
-        let rank = 1;
-        eventEntries.forEach((entry, pos) => {
-            if (pos > 0 && entry.score === eventEntries[pos - 1].score) {
-                // Tie: same rank as previous
+        // Calculate points based on position (P)
+        // Formula: Score = 100 * (N - P) / (N - 1)
+        eventEntries.forEach((entry) => {
+            const P = entry.position;
+            let points = 0;
+            if (N > 1) {
+                points = Math.round(100 * (N - P) / (N - 1));
             } else {
-                rank = pos + 1;
+                points = 100; // Only one participant
             }
-            updatedParticipants[entry.index][`_event_points_${eventIdx}`] = POINTS_SCHEME[rank] || 0;
+            
+            // Ensure points are within 0-100 range
+            updatedParticipants[entry.index][`_event_points_${eventIdx}`] = Math.max(0, Math.min(100, points));
         });
     }
 

@@ -6,8 +6,12 @@ const EventManager = ({ onBack }) => {
     const [name, setName] = useState('');
     const [type, setType] = useState('Individual');
 
+    const isLimitReached = events.length >= 5;
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (isLimitReached) return;
+
         const newId = events.length > 0 ? Math.max(...events.map(ev => ev.id)) + 1 : 1;
         addEvent({ id: newId, name, type });
         setName('');
@@ -46,7 +50,22 @@ const EventManager = ({ onBack }) => {
                                 <option value="Team">Team</option>
                             </select>
                         </div>
-                        <button type="submit" className="btn btn-primary" style={{ marginTop: '1rem', justifyContent: 'center' }}>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+                            Events: {events.length}/5
+                        </div>
+
+                        {isLimitReached && (
+                            <p style={{ color: '#ef4444', fontSize: '0.85rem', textAlign: 'center', marginBottom: '1rem' }}>
+                                Maximum of 5 events reached.
+                            </p>
+                        )}
+
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary" 
+                            style={{ marginTop: '0.5rem', justifyContent: 'center' }}
+                            disabled={isLimitReached}
+                        >
                             Add Event
                         </button>
                     </form>
