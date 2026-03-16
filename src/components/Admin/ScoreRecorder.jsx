@@ -12,8 +12,11 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
         }
         
         const numericScore = parseInt(score, 10);
-        if (!isNaN(numericScore) && numericScore >= 1) { // Position must be at least 1
-            recordScore(participantIdx, selectedEventIdx, numericScore);
+        if (!isNaN(numericScore)) {
+            const currentEvent = events[selectedEventIdx];
+            const maxPos = currentEvent?.type === 'Team' ? 5 : 20;
+            const validScore = Math.max(1, Math.min(maxPos, numericScore));
+            recordScore(participantIdx, selectedEventIdx, validScore);
         }
     };
 
@@ -87,6 +90,7 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
                                                     onChange={(e) => handleScoreChange(i, e.target.value)}
                                                     placeholder="Pos"
                                                     min="1"
+                                                    max={currentEvent?.type === 'Team' ? 5 : 20}
                                                     style={{ padding: '8px', fontSize: '0.9rem' }}
                                                 />
                                             </td>
