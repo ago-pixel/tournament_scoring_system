@@ -1,23 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTournament } from '../../context/TournamentContext';
 
 const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
     const { participants, events, recordScore } = useTournament();
-    const [selectedEventIdx, setSelectedEventIdx] = useState(0);
+    const [localScores, setLocalScores] = useState({});
 
-    const handleScoreChange = (participantIdx, score) => {
-        if (score === '') {
-            recordScore(participantIdx, selectedEventIdx, null);
-            return;
-        }
-        
-        const numericScore = parseInt(score, 10);
-        if (!isNaN(numericScore)) {
-            const currentEvent = events[selectedEventIdx];
-            const maxPos = currentEvent?.type === 'Team' ? 5 : 20;
-            const validScore = Math.max(1, Math.min(maxPos, numericScore));
-            recordScore(participantIdx, selectedEventIdx, validScore);
-        }
+    // Initialize local scores when event changes or participants update
+    useEffect(() => {
+        const initial = {};
+        participants.forEach((p, i) => {
+            initial[i] = p.scores && p.scores[selectedEventIdx] !== null ? p.scores[selectedEventIdx] : '';
+        });
+        setLocalScores(initial);
+    }, [selectedEventIdx, participants]);
+
+    const handleLocalChange = (participantIdx, value) => {
+        setLocalScores(prev => ({ ...prev, [participantIdx]: value }));
+    };
+
+    const handleSubmit = () => {
+        // Bulk record scores
+        participants.forEach((p, i) => {
+            const val = localScores[i];
+            if (val === '') {
+                recordScore(i, selectedEventIdx, null);
+            } else {
+                const num = parseInt(val, 10);
+                if (!isNaN(num)) {
+                    recordScore(i, selectedEventIdx, num);
+                }
+            }
+        });
+        alert('Scores submitted successfully!');
     };
 
     const currentEvent = events[selectedEventIdx];
@@ -33,7 +47,7 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
             </div>
 
             <div className="glass-card" style={{ padding: '2rem' }}>
-                <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{ marginBottom: '2rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem' }}>
                     <h3 style={{ whiteSpace: 'nowrap' }}>Record Positions for:</h3>
                     <select 
                         value={selectedEventIdx} 
@@ -45,13 +59,17 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
                             borderRadius: '8px',
                             color: 'white',
                             fontSize: '1rem',
-                            flexGrow: 1
+                            flexGrow: 1,
+                            minWidth: '200px'
                         }}
                     >
                         {events.map((ev, i) => (
                             <option key={ev.id} value={i}>{ev.name} ({ev.type})</option>
                         ))}
                     </select>
+                    <button onClick={handleSubmit} className="btn btn-primary">
+                        Submit All Positions
+                    </button>
                 </div>
 
                 {events.length === 0 ? (
@@ -86,8 +104,8 @@ const ScoreRecorder = ({ onManageParticipants, onManageEvents }) => {
                                             <td style={{ padding: '1rem' }}>
                                                 <input 
                                                     type="number" 
-                                                    value={scoreValue} 
-                                                    onChange={(e) => handleScoreChange(i, e.target.value)}
+                                                    value={localScores[i] ?? ''} 
+                                                    onChange={(e) => handleLocalChange(i, e.target.value)}
                                                     placeholder="Pos"
                                                     min="1"
                                                     max={currentEvent?.type === 'Team' ? 5 : 20}

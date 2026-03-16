@@ -127,10 +127,19 @@ export const TournamentProvider = ({ children }) => {
     };
 
     const recordScore = (participantIndex, eventIdx, score) => {
-        // Validation: Position must be at least 1
-        if (score !== null && score < 1) return;
-
         setData(prev => {
+            const currentEvent = prev.events[eventIdx];
+            if (!currentEvent) return prev;
+
+            // Strict Position Validation
+            if (score !== null) {
+                const maxPos = currentEvent.type === 'Team' ? 5 : 20;
+                if (score < 1 || score > maxPos) {
+                    alert(`Invalid position for ${currentEvent.type} event. Must be between 1 and ${maxPos}.`);
+                    return prev;
+                }
+            }
+
             const newParticipants = [...prev.participants];
             if (!newParticipants[participantIndex].scores) {
                 newParticipants[participantIndex].scores = Array(prev.events.length).fill(null);
