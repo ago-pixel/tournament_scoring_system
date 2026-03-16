@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTournament } from '../../context/TournamentContext';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
     const { login } = useTournament();
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
@@ -10,6 +10,7 @@ const Login = () => {
         e.preventDefault();
         if (login(password)) {
             setError(false);
+            if (onLogin) onLogin();
         } else {
             setError(true);
             setTimeout(() => setError(false), 2000);

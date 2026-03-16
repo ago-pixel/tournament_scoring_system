@@ -19,7 +19,7 @@ const AppContent = () => {
 
         switch (view) {
             case 'leaderboard': return <Leaderboard />;
-            case 'login': return isAdmin ? setView('record_scores') || <ScoreRecorder /> : <Login />;
+            case 'login': return <Login onLogin={() => setView('record_scores')} />;
             case 'manage_participants': return <ParticipantManager onBack={() => setView('record_scores')} />;
             case 'manage_events': return <EventManager onBack={() => setView('record_scores')} />;
             case 'record_scores': return <ScoreRecorder onManageParticipants={() => setView('manage_participants')} onManageEvents={() => setView('manage_events')} />;
